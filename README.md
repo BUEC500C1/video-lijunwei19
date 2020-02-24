@@ -18,7 +18,7 @@ Install FFmpeg
 Ubuntu tutorial: https://linuxize.com/post/how-to-install-ffmpeg-on-ubuntu-18-04/
 ```
 
-# Instrudtion
+# Instruction
 Run programe
 ```
 python main.py
