@@ -6,11 +6,7 @@ def imgToVideo(username):
   avi =  "video/" + username + "normal.avi"
   mp4 =  "video/" + username + "better.mp4"
 
-  # convert jpg to mp4
-  # ffmpeg -i img-%02d.png video_name.avi #2-digit number for name
-  # set frame rate
-  # ffmpeg -framerate 30 -i img%03d.png output.mp4  
-  # 0.3 for frame rate = 3s per image    
+
   subprocess.call(['ffmpeg', '-framerate', '0.3', '-i', 
     fileName, 
     avi])

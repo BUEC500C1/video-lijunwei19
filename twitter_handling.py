@@ -1,5 +1,6 @@
 import tweepy as tp 
-import configparser 
+import configparser
+import json  
 import time
 import pprint as pp  
 import image_processing as IMP
@@ -19,9 +20,10 @@ class twitter_feed_catching():
     auth.set_access_token = (access_token, access_secret) 
 
     self.api = tp.API(auth)
- 
-# getting the user 
+    self.content = []
+
   def get_user_pic(self, username):
+    # getting the users' picture_url
         try:
             u = self.api.get_user(username)
             return u.profile_image_url_https
@@ -35,18 +37,28 @@ class twitter_feed_catching():
                                     include_entities=True,
                                     tweet_mode='extended',
                                     lang="en")
+            # get tweets content save it self.content 
+            for tweet in tweets:
+              self.content.append(tweet.full_text)
+
             return tweets
         except tp.error.TweepError:
             return ""
 
+  def save_json(self,username):
+          json_tweets = json.dumps(self.content,indent = 4)
+          path = 'Json/'+username+'.json'
+          with open(path, 'w') as outfile:
+            outfile.write(json_tweets)  
 
-def main():
-  a = twitter_feed_catching("keys")
-  username = input("twitter_ID: ")
-  profile_url = a.get_user_pic(username)
-  print(profile_url)
-  tweets = a.get_users_tweets(username)
-  IMP.create_images(username, profile_url, tweets)
+# def main():
+#   a = twitter_feed_catching("keys")
+#   username = input("twitter_ID: ")
+#   profile_url = a.get_user_pic(username)
+#   print(profile_url)
+#   tweets = a.get_users_tweets(username)
+#   a.save_json(username)
+#   # IMP.create_images(username, profile_url, tweets)
 
-if __name__ == '__main__':
-  main()
+# if __name__ == '__main__':
+#   main()
